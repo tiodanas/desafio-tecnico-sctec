@@ -1,7 +1,6 @@
 package br.gov.sc.sctec.empreendedorismo.backend.api.service;
 
 import br.gov.sc.sctec.empreendedorismo.backend.api.common.exception.NotFoundException;
-import br.gov.sc.sctec.empreendedorismo.backend.api.common.exception.NotImplementedException;
 import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToReadDto;
 import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToSaveDto;
 import br.gov.sc.sctec.empreendedorismo.backend.api.model.Empreendimento;
@@ -86,18 +85,22 @@ public class EmpreendimentoService {
         empreendimentoRepository.save(empreendimento);
 
         EmpreendimentoToReadDto dtoOutput = EmpreendimentoToReadDto.fromEntity(empreendimento);
-        log.info("---> update(), atualizou emrpeendimento: {}.", dtoOutput);
+        log.info("---> update(), atualizou empreendimento: {}.", dtoOutput);
         return dtoOutput;
     }
 
     @Transactional
-    public EmpreendimentoToReadDto activate(Long idEmpreendimento) {
-        throw new NotImplementedException();
-    }
+    public EmpreendimentoToReadDto activate(Long idEmpreendimento,
+                                            boolean ativar) {
+        log.info("---> activate(), recebeu empreendimento para {}: ID = {}.", ativar ? "ativar" : "desativar", idEmpreendimento);
 
-    @Transactional
-    public EmpreendimentoToReadDto deactivate(Long idEmpreendimento) {
-        throw new NotImplementedException();
+        Empreendimento empreendimento = this.findById(idEmpreendimento);
+        empreendimento.setAtivo(ativar);
+        empreendimentoRepository.save(empreendimento);
+
+        EmpreendimentoToReadDto dtoOutput = EmpreendimentoToReadDto.fromEntity(empreendimento);
+        log.info("---> activate(), {} empreendimento: ID = {}.", ativar ? "ativou" : "desativou", idEmpreendimento);
+        return dtoOutput;
     }
 
     private Empreendimento findById(Long idEmpreendimento) {

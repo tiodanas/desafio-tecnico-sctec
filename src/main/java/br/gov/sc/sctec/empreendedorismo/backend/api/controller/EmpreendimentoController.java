@@ -53,13 +53,13 @@ public class EmpreendimentoController {
 
     @PatchMapping("/{idEmpreendimento}/ativar")
     public ResponseEntity<Object> activate(@PathVariable("idEmpreendimento") Long idEmpreendimento) {
-        EmpreendimentoToReadDto dtoOutput = empreendimentoService.activate(idEmpreendimento);
+        EmpreendimentoToReadDto dtoOutput = empreendimentoService.activate(idEmpreendimento, true);
         return ResponseEntity.status(HttpStatus.OK).body(dtoOutput);
     }
 
-    @PatchMapping("/{idEmpreendimento}/ativar")
+    @PatchMapping("/{idEmpreendimento}/desativar")
     public ResponseEntity<Object> deactivate(@PathVariable("idEmpreendimento") Long idEmpreendimento) {
-        EmpreendimentoToReadDto dtoOutput = empreendimentoService.deactivate(idEmpreendimento);
+        EmpreendimentoToReadDto dtoOutput = empreendimentoService.activate(idEmpreendimento, false);
         return ResponseEntity.status(HttpStatus.OK).body(dtoOutput);
     }
 
