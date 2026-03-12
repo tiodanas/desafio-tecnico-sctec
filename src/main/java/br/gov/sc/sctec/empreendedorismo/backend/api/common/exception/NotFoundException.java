@@ -5,11 +5,14 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.Serial;
+
 @ResponseStatus(HttpStatus.NOT_FOUND)
 @Getter
 @Setter
 public class NotFoundException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = -5580115757682328010L;
 
     private final String message;
