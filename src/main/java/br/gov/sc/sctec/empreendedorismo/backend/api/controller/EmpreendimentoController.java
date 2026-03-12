@@ -1,7 +1,7 @@
 package br.gov.sc.sctec.empreendedorismo.backend.api.controller;
 
 import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToReadDto;
-import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToUpdateDto;
+import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToSaveDto;
 import br.gov.sc.sctec.empreendedorismo.backend.api.service.EmpreendimentoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -39,15 +39,27 @@ public class EmpreendimentoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save() {
-        empreendimentoService.save();
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    public ResponseEntity<Object> insert(@RequestBody @Valid EmpreendimentoToSaveDto dtoInput) {
+        EmpreendimentoToReadDto dtoOutput = empreendimentoService.insert(dtoInput);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dtoOutput);
     }
 
     @PutMapping("/{idEmpreendimento}")
     public ResponseEntity<Object> update(@PathVariable("idEmpreendimento") Long idEmpreendimento,
-                                         @RequestBody @Valid EmpreendimentoToUpdateDto dtoInput) {
+                                         @RequestBody @Valid EmpreendimentoToSaveDto dtoInput) {
         EmpreendimentoToReadDto dtoOutput = empreendimentoService.update(idEmpreendimento, dtoInput);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoOutput);
+    }
+
+    @PatchMapping("/{idEmpreendimento}/ativar")
+    public ResponseEntity<Object> activate(@PathVariable("idEmpreendimento") Long idEmpreendimento) {
+        EmpreendimentoToReadDto dtoOutput = empreendimentoService.activate(idEmpreendimento);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoOutput);
+    }
+
+    @PatchMapping("/{idEmpreendimento}/ativar")
+    public ResponseEntity<Object> deactivate(@PathVariable("idEmpreendimento") Long idEmpreendimento) {
+        EmpreendimentoToReadDto dtoOutput = empreendimentoService.deactivate(idEmpreendimento);
         return ResponseEntity.status(HttpStatus.OK).body(dtoOutput);
     }
 

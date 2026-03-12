@@ -15,6 +15,7 @@ public class Empreendimento implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "st_nome")
