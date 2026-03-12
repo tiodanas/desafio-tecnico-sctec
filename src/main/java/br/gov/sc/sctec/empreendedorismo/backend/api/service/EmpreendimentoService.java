@@ -1,7 +1,9 @@
 package br.gov.sc.sctec.empreendedorismo.backend.api.service;
 
 import br.gov.sc.sctec.empreendedorismo.backend.api.common.exception.NotFoundException;
+import br.gov.sc.sctec.empreendedorismo.backend.api.common.exception.NotImplementedException;
 import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToReadDto;
+import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToUpdateDto;
 import br.gov.sc.sctec.empreendedorismo.backend.api.model.Empreendimento;
 import br.gov.sc.sctec.empreendedorismo.backend.api.repository.EmpreendimentoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -45,8 +47,25 @@ public class EmpreendimentoService {
         empreendimentoRepository.delete(empreendimento);
     }
 
-    public void save() {}
-    public void update(Long idEmpreendimento) {}
+    public void save() {
+        throw new NotImplementedException();
+    }
+
+    public EmpreendimentoToReadDto update(Long idEmpreendimento,
+                       EmpreendimentoToUpdateDto dto) {
+        Empreendimento empreendimento = this.findById(idEmpreendimento);
+
+        empreendimento.setNome(dto.nome());
+        empreendimento.setResponsavel(dto.responsavel());
+        empreendimento.setMunicipio(dto.municipio());
+        empreendimento.setTipoSegmento(dto.tipoSegmento());
+        empreendimento.setEmail(dto.email());
+        empreendimento.setAtivo(dto.ativo());
+
+        empreendimentoRepository.save(empreendimento);
+
+        return EmpreendimentoToReadDto.fromEntity(empreendimento);
+    }
 
     private Empreendimento findById(Long idEmpreendimento) {
         Optional<Empreendimento> dto = empreendimentoRepository.findById(idEmpreendimento);

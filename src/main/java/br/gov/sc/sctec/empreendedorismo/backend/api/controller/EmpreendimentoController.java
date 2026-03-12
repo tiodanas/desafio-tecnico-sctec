@@ -1,7 +1,9 @@
 package br.gov.sc.sctec.empreendedorismo.backend.api.controller;
 
 import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToReadDto;
+import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToUpdateDto;
 import br.gov.sc.sctec.empreendedorismo.backend.api.service.EmpreendimentoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +45,10 @@ public class EmpreendimentoController {
     }
 
     @PutMapping("/{idEmpreendimento}")
-    public ResponseEntity<Object> update(@PathVariable("idEmpreendimento") Long idEmpreendimento) {
-        empreendimentoService.update(idEmpreendimento);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<Object> update(@PathVariable("idEmpreendimento") Long idEmpreendimento,
+                                         @RequestBody @Valid EmpreendimentoToUpdateDto dtoInput) {
+        EmpreendimentoToReadDto dtoOutput = empreendimentoService.update(idEmpreendimento, dtoInput);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoOutput);
     }
 
 }
