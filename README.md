@@ -171,14 +171,37 @@ a documentação Swagger também permite a execução desses endpoints.
 * Diretório `src/test`
     * Classes do testes automatizados, atualmente estão implementados os teste de integração da camada de apresentação - controller. 
 
+## 🔀 Estratégia inicial para uso de branchs no GIT
+
+### Este projeto possui 3 branchs principais:
+* main
+* stage
+* develop
+
+### Ciclo de branchs para toda nova implementação
+* Deve-se criar uma nova branch com o nome `develop_<nome-da-funcionalidade>`
+* A origem dessa nova branch deve ser sempre a `develop`
+* Quando a implementação finalizar, deve-se fazer o merge desta nova branch de volta para a `develop`
+* Para disponibilizar a nova funcionalidade no ambiente stage, fazer o merge da `develop` para a `stage`
+* Quando pronto para subir em produção, fazer um pull request da branch `stage` para a `main`
+
+### Ciclo de branchs para toda correção de bug apresentado em produção
+* Deve-se criar uma nova branch com o nome `main_<nome-do-bug>`
+* A origem dessa nova branch deve ser sempre a `main`
+* Quando a implementação finalizar, deve-se fazer o merge desta nova branch de volta para a branch `stage`
+* Quando pronto para subir em produção, fazer um pull request da branch `stage` para a `main`
+* Para manter a branch develop atualizada, fazer o merge da branch `main` para a `develop`
+
 ## 🚀 Como Executar
+
+### Método 1: com JDK e Maven locais
 Siga estas etapas para rodar o projeto na sua máquina.
 
-### Pré-requisitos
+#### Pré-requisitos
 * JDK 25 instalado
 * Maven 3.9.x instalado
 
-### Passo a Passo
+#### Passo a Passo
 1. **Abra um terminal/prompt de comando**
 2. **Clone o repositório GIT**
    ```bash
@@ -193,6 +216,27 @@ Siga estas etapas para rodar o projeto na sua máquina.
 6. **Acesse a página de documentação Swagger para ver se a aplicação está rodando, onde também pode-se testar os endpoints da API**
    * [http://localhost:8080/api-docs.html](http://localhost:8080/api-docs.html)
 
+### Método 2: com docker
+Siga estas etapas para rodar o projeto na sua máquina.
+
+#### Pré-requisitos
+* Docker instalado
+
+#### Passo a Passo
+1. **Abra um terminal/prompt de comando**
+2. **Clone o repositório GIT**
+   ```bash
+   git clone https://github.com/tiodanas/desafio-tecnico-sctec.git
+3. **Acesse o diretório raiz onde o projeto foi clonado**
+4. **Execute o build da imagem usando o Docker (parâmetro -t indica o nome da imagem a ser gerada)**
+   ```bash
+   docker build -t desafio-tecnico-sctec-backend-api .
+5. **Rode o container do Docker, subindo a imagem construída**
+   ```bash
+   docker run -p 8080:8080 -d desafio-tecnico-sctec-backend-api
+6. **Acesse a página de documentação Swagger para ver se a aplicação está rodando, onde também pode-se testar os endpoints da API**
+    * [http://localhost:8080/api-docs.html](http://localhost:8080/api-docs.html)
+
 ## 🎥 Link para o vídeo pitch
 
-**[http://localhost:8080/api-docs.html](http://localhost:8080/api-docs.html)**
+**[https://youtu.be/tC0mAwD5Nbs](https://youtu.be/tC0mAwD5Nbs)**
