@@ -27,9 +27,9 @@ public class Empreendimento implements Serializable {
     @Column(name = "st_municipio")
     private String municipio;
 
-    @Column(name = "tp_segmento")
-    @Enumerated(EnumType.STRING)
-    private TipoSegmento tipoSegmento;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_segmento")
+    private Segmento segmento;
 
     @Column(name = "st_email")
     private String email;

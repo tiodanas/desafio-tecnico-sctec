@@ -4,6 +4,7 @@ import br.gov.sc.sctec.empreendedorismo.backend.api.common.exception.NotFoundExc
 import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToReadDto;
 import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToSaveDto;
 import br.gov.sc.sctec.empreendedorismo.backend.api.model.Empreendimento;
+import br.gov.sc.sctec.empreendedorismo.backend.api.model.Segmento;
 import br.gov.sc.sctec.empreendedorismo.backend.api.repository.EmpreendimentoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,15 +19,18 @@ import java.util.Optional;
 public class EmpreendimentoService {
 
     private final EmpreendimentoRepository empreendimentoRepository;
+    private final SegmentoService segmentoService;
 
-    public EmpreendimentoService(EmpreendimentoRepository empreendimentoRepository) {
+    public EmpreendimentoService(EmpreendimentoRepository empreendimentoRepository,
+                                 SegmentoService segmentoService) {
         this.empreendimentoRepository = empreendimentoRepository;
+        this.segmentoService = segmentoService;
     }
 
     @Transactional(readOnly = true)
     public List<EmpreendimentoToReadDto> findAll() {
         List<Empreendimento> list = empreendimentoRepository.findAll();
-        log.info("---> findAll(), achou lista com {} Empreendimentos.",  list.size());
+        log.info("---> findAll(), achou lista com {} empreendimentos.",  list.size());
         return list
                 .stream()
                 .map(EmpreendimentoToReadDto::fromEntity)
@@ -49,14 +53,18 @@ public class EmpreendimentoService {
 
     @Transactional
     public EmpreendimentoToReadDto insert(EmpreendimentoToSaveDto dtoToSave) {
-        log.info("---> insert(), recebeu emrpeendimento para incluir: {}.", dtoToSave);
+        log.info("---> insert(), recebeu empreendimento para incluir: {}.", dtoToSave);
 
+        // Validar o Segmento informado.
+        Segmento segmento = segmentoService.findById(dtoToSave.idSegmento());
+
+        // Agora, incluir.
         Empreendimento empreendimento = new Empreendimento();
 
         empreendimento.setNome(dtoToSave.nome());
         empreendimento.setResponsavel(dtoToSave.responsavel());
         empreendimento.setMunicipio(dtoToSave.municipio());
-        empreendimento.setTipoSegmento(dtoToSave.tipoSegmento());
+        empreendimento.setSegmento(segmento);
         empreendimento.setEmail(dtoToSave.email());
         empreendimento.setAtivo(dtoToSave.ativo());
         empreendimento.setDataCriacao(LocalDateTime.now());
@@ -64,23 +72,28 @@ public class EmpreendimentoService {
         empreendimento = empreendimentoRepository.save(empreendimento);
 
         EmpreendimentoToReadDto dtoOutput = EmpreendimentoToReadDto.fromEntity(empreendimento);
-        log.info("---> insert(), incluiu emrpeendimento: {}.", dtoOutput);
+        log.info("---> insert(), incluiu empreendimento: {}.", dtoOutput);
         return dtoOutput;
     }
 
     @Transactional
     public EmpreendimentoToReadDto update(Long idEmpreendimento,
-                                          EmpreendimentoToSaveDto dtoInput) {
-        log.info("---> update(), recebeu emrpeendimento para atualizar: {}.", dtoInput);
+                                          EmpreendimentoToSaveDto dtoToSave) {
+        log.info("---> update(), recebeu empreendimento para atualizar: {}.", dtoToSave);
 
+        // Validar o id do Empreendimento informado.
         Empreendimento empreendimento = this.findById(idEmpreendimento);
 
-        empreendimento.setNome(dtoInput.nome());
-        empreendimento.setResponsavel(dtoInput.responsavel());
-        empreendimento.setMunicipio(dtoInput.municipio());
-        empreendimento.setTipoSegmento(dtoInput.tipoSegmento());
-        empreendimento.setEmail(dtoInput.email());
-        empreendimento.setAtivo(dtoInput.ativo());
+        // Validar o Segmento informado.
+        Segmento segmento = segmentoService.findById(dtoToSave.idSegmento());
+
+        // Agora, atualizar.
+        empreendimento.setNome(dtoToSave.nome());
+        empreendimento.setResponsavel(dtoToSave.responsavel());
+        empreendimento.setMunicipio(dtoToSave.municipio());
+        empreendimento.setSegmento(segmento);
+        empreendimento.setEmail(dtoToSave.email());
+        empreendimento.setAtivo(dtoToSave.ativo());
 
         empreendimentoRepository.save(empreendimento);
 

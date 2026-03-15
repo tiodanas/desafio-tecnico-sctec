@@ -1,6 +1,5 @@
 package br.gov.sc.sctec.empreendedorismo.backend.api.dto;
 
-import br.gov.sc.sctec.empreendedorismo.backend.api.model.TipoSegmento;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +20,7 @@ public record EmpreendimentoToSaveDto(
         String municipio,
 
         @NotNull(message = "O segmento não pode ser nulo.")
-        TipoSegmento tipoSegmento,
+        Long idSegmento,
 
         @NotBlank(message = "O e-mail não pode ser vazio.")
         @Email(message = "O e-mail deve ser válido.")

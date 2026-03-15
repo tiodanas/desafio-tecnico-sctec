@@ -9,7 +9,7 @@ public record EmpreendimentoToReadDto(
         String nome,
         String responsavel,
         String municipio,
-        String tipoSegmento,
+        SegmentoToReadDto segmento,
         String email,
         Boolean ativo,
         LocalDateTime dataCriacao) {
@@ -21,7 +21,7 @@ public record EmpreendimentoToReadDto(
                 empreendimento.getNome(),
                 empreendimento.getResponsavel(),
                 empreendimento.getMunicipio(),
-                empreendimento.getTipoSegmento().toString(),
+                SegmentoToReadDto.fromEntity(empreendimento.getSegmento()),
                 empreendimento.getEmail(),
                 empreendimento.getAtivo(),
                 empreendimento.getDataCriacao()
