@@ -1,7 +1,6 @@
 package br.gov.sc.sctec.empreendedorismo.backend.api;
 
-import br.gov.sc.sctec.empreendedorismo.backend.api.dto.EmpreendimentoToSaveDto;
-import br.gov.sc.sctec.empreendedorismo.backend.api.model.TipoSegmento;
+import br.gov.sc.sctec.empreendedorismo.backend.api.dto.SegmentoToSaveDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -18,7 +17,7 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 @AutoConfigureRestTestClient
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
-class SctecEmpreendedorismoBackendApiApplicationTests {
+class SegmentoControllerTests {
 
     @Autowired
     private RestTestClient restTestClient;
@@ -29,7 +28,7 @@ class SctecEmpreendedorismoBackendApiApplicationTests {
         log.info("---> readAllTest()");
         restTestClient
                 .get()
-                .uri("/api/v1/empreendimentos")
+                .uri("/api/v1/segmentos")
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -41,7 +40,7 @@ class SctecEmpreendedorismoBackendApiApplicationTests {
         log.info("---> readOneNotFoundTest()");
         restTestClient
                 .get()
-                .uri("/api/v1/empreendimentos/30")
+                .uri("/api/v1/segmentos/6")
                 .exchange()
                 .expectStatus()
                 .isNotFound();
@@ -52,17 +51,12 @@ class SctecEmpreendedorismoBackendApiApplicationTests {
     @Rollback(false)
     void createOneTest() {
         log.info("---> createOneTest()");
-        EmpreendimentoToSaveDto dto = new EmpreendimentoToSaveDto(
-                "Camila Vi ME",
-                "Camila Vitória da Conceição",
-                "Florianópolis",
-                TipoSegmento.COMERCIO,
-                "camila.vi@gmail.com",
-                Boolean.TRUE
+        SegmentoToSaveDto dto = new SegmentoToSaveDto(
+                "Novo segmento"
         );
         restTestClient
                 .post()
-                .uri("/api/v1/empreendimentos")
+                .uri("/api/v1/segmentos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(dto)
                 .exchange()
@@ -76,7 +70,7 @@ class SctecEmpreendedorismoBackendApiApplicationTests {
         log.info("---> readOneTest()");
         restTestClient
                 .get()
-                .uri("/api/v1/empreendimentos/19")
+                .uri("/api/v1/segmentos/6")
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -87,45 +81,14 @@ class SctecEmpreendedorismoBackendApiApplicationTests {
     @Rollback(false)
     void updateOneTest() {
         log.info("---> updateOneTest()");
-        EmpreendimentoToSaveDto dto = new EmpreendimentoToSaveDto(
-                "Camila Vi ME",
-                "Camila Vitória da Conceição",
-                "São José",
-                TipoSegmento.COMERCIO,
-                "camila.vi@gmail.com",
-                Boolean.TRUE
+        SegmentoToSaveDto dto = new SegmentoToSaveDto(
+                "Nome alterado"
         );
         restTestClient
                 .put()
-                .uri("/api/v1/empreendimentos/19")
+                .uri("/api/v1/segmentos/6")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(dto)
-                .exchange()
-                .expectStatus()
-                .isOk();
-    }
-
-    @Test
-    @Order(6)
-    @Rollback(false)
-    void inactivateOneTest() {
-        log.info("---> inactivateOneTest()");
-        restTestClient
-                .patch()
-                .uri("/api/v1/empreendimentos/19/desativar")
-                .exchange()
-                .expectStatus()
-                .isOk();
-    }
-
-    @Test
-    @Order(7)
-    @Rollback(false)
-    void activateOneTest() {
-        log.info("---> activateOneTest()");
-        restTestClient
-                .patch()
-                .uri("/api/v1/empreendimentos/19/ativar")
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -138,7 +101,7 @@ class SctecEmpreendedorismoBackendApiApplicationTests {
         log.info("---> deleteOneTest()");
         restTestClient
                 .delete()
-                .uri("/api/v1/empreendimentos/19")
+                .uri("/api/v1/segmentos/6")
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -150,7 +113,7 @@ class SctecEmpreendedorismoBackendApiApplicationTests {
         log.info("---> readOneNotFoundAfterDeleteTest()");
         restTestClient
                 .get()
-                .uri("/api/v1/empreendimentos/19")
+                .uri("/api/v1/segmentos/6")
                 .exchange()
                 .expectStatus()
                 .isNotFound();
