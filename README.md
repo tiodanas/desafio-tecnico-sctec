@@ -194,7 +194,7 @@ a documentação Swagger também permite a execução desses endpoints.
 
 ## 🚀 Como Executar
 
-### Método 1: com JDK e Mavem locais
+### Método 1: com JDK e Maven locais
 Siga estas etapas para rodar o projeto na sua máquina.
 
 #### Pré-requisitos
