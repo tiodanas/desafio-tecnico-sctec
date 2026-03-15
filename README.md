@@ -239,4 +239,4 @@ Siga estas etapas para rodar o projeto na sua máquina.
 
 ## 🎥 Link para o vídeo pitch
 
-**[http://localhost:8080/api-docs.html](http://localhost:8080/api-docs.html)**
+**[https://youtu.be/tC0mAwD5Nbs](https://youtu.be/tC0mAwD5Nbs)**
