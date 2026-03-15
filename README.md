@@ -171,6 +171,27 @@ a documentação Swagger também permite a execução desses endpoints.
 * Diretório `src/test`
     * Classes do testes automatizados, atualmente estão implementados os teste de integração da camada de apresentação - controller. 
 
+## 🔀 Estratégia inicial para uso de branchs no GIT
+
+### Este projeto possui 3 branchs principais:
+* main
+* stage
+* develop
+
+### Ciclo de branchs para toda nova implementação
+* Deve-se criar uma nova branch com o nome `develop_<nome-da-funcionalidade>`
+* A origem dessa nova branch deve ser sempre a `develop`
+* Quando a implementação finalizar, deve-se fazer o merge desta nova branch de volta para a `develop`
+* Para disponibilizar a nova funcionalidade no ambiente stage, fazer o merge da `develop` para a `stage`
+* Quando pronto para subir em produção, fazer um pull request da branch `stage` para a `main`
+
+### Ciclo de branchs para toda correção de bug apresentado em produção
+* Deve-se criar uma nova branch com o nome `main_<nome-do-bug>`
+* A origem dessa nova branch deve ser sempre a `main`
+* Quando a implementação finalizar, deve-se fazer o merge desta nova branch de volta para a branch `stage`
+* Quando pronto para subir em produção, fazer um pull request da branch `stage` para a `main`
+* Para manter a branch develop atualizada, fazer o merge da branch `main` para a `develop`
+
 ## 🚀 Como Executar
 
 ### Método 1: com JDK e Mavem locais
