@@ -36,14 +36,14 @@ public class EmpreendimentoService {
     @Transactional(readOnly = true)
     public EmpreendimentoToReadDto findOne(Long idEmpreendimento) throws NotFoundException {
         Empreendimento empreendimento = this.findById(idEmpreendimento);
-        log.info("---> findOne(), achou Empreendimento com ID = {}.",  idEmpreendimento);
+        log.info("---> findOne(), achou empreendimento com ID = {}.",  idEmpreendimento);
         return EmpreendimentoToReadDto.fromEntity(empreendimento);
     }
 
     @Transactional()
     public void delete(Long idEmpreendimento) {
         Empreendimento empreendimento = this.findById(idEmpreendimento);
-        log.info("---> delete(), encontrou e vai deletar Empreendimento com ID = {}.", idEmpreendimento);
+        log.info("---> delete(), encontrou e vai deletar empreendimento com ID = {}.", idEmpreendimento);
         empreendimentoRepository.delete(empreendimento);
     }
 
@@ -108,7 +108,7 @@ public class EmpreendimentoService {
         if (dto.isPresent()) {
             return dto.get();
         } else {
-            log.error("---> findOne(), Empreendimento com ID = {} não encontrado.",  idEmpreendimento);
+            log.error("---> findOne(), empreendimento com ID = {} não encontrado.",  idEmpreendimento);
             throw new NotFoundException(String.format("Empreendimento com ID = %d não encontrado.", idEmpreendimento));
         }
     }
