@@ -1,12 +1,3 @@
-<!--
-Na documentação README.md deverá constar, no mínimo:
-****** A descrição da solução desenvolvida;
-****** As tecnologias utilizadas;
-****** * A estrutura geral do projeto;
-* As instruções necessárias para sua execução;
-* Um link para o vídeo pitch, que deverá estar referenciado diretamente no README.md.
--->
-
 # DESAFIO TÉCNICO SCTEC - BACKEND API
 
 ## 📝 Descrição
@@ -36,6 +27,11 @@ Esta aplicação backend permite as seguintes ações:
 * Inativar um empreendimento cadastrado
 * Ativar um empreendimento cadastrado
 * Excluir todos os dados de um empreendimento cadastrado
+* Listar todos os segmentos cadastrados
+* Buscar os dados cadastrados de um segmentos em específico
+* Cadastrar novo segmentos
+* Atualizar os dados de um segmentos cadastrado
+* Excluir todos os dados de um segmentos cadastrado
 
 ### Endpoints implementados para a realização das ações disponíveis
 * `GET /api/v1/empreendimentos`
@@ -65,6 +61,26 @@ Esta aplicação backend permite as seguintes ações:
 * `DELETE /api/v1/empreendimentos/{id}`
   * Excluir todos os dados de um empreendimento cadastrado - parâmetro {id}
 
+
+* `GET /api/v1/segmentos`
+    * Lista todos os segmentos cadastrados
+
+
+* `GET /api/v1/segmentos/{id}`
+    * Busca os dados cadastrados de um segmento em específico - parâmetro {id}
+
+
+* `POST /api/v1/segmentos`
+    * Cadastrar novo segmento
+
+
+* `PUT /api/v1/segmentos/{id}`
+    * Atualizar os dados de um segmento cadastrado - parâmetro {id}
+
+
+* `DELETE /api/v1/segmentos/{id}`
+    * Excluir todos os dados de um segmento cadastrado - parâmetro {id}
+
 ### Documentação Swagger
 
 Esta aplicação disponibiliza uma página HTML com a sua documentação em formato Swagger, que é um conjunto de ferramentas open-source baseadas na OpenAPI Specification (OAS).
@@ -75,14 +91,14 @@ Esta aplicação disponibiliza uma página HTML com a sua documentação em form
 
 Com a aplicação rodando, acesse esse link: [Documentação Swagger desta aplicação](http://localhost:8080/api-docs.html)
 
-### Uso da documentação Swagger
+### Usando a documentação Swagger para testar a API
 
 Além de ter acesso a documentação dos endpoints implementados nesta API,
 a documentação Swagger também permite a execução desses endpoints.
 
 **Veja maiores detalhes de como executar a chamada dos endpoints no vídeo pitch deste projeto.**
 
-## 🚀 Tecnologias utilizadas
+## 💻 Tecnologias utilizadas
 
 ### Linguagem de programação Java
 * Versão 25
@@ -102,7 +118,7 @@ a documentação Swagger também permite a execução desses endpoints.
 * Sistema de controle de versão distribuído GIT
 * [Site oficial](https://git-scm.com/)
 
-## 🚀 Estrutura geral do projeto
+## 📁 Estrutura geral do projeto
 
 * Diretório `./src`
     * Código fonte
@@ -153,16 +169,30 @@ a documentação Swagger também permite a execução desses endpoints.
 
 
 * Diretório `src/test`
-    * ???
+    * Classes do testes automatizados, atualmente estão implementados os teste de integração da camada de apresentação - controller. 
 
 ## 🚀 Como Executar
 Siga estas etapas para rodar o projeto na sua máquina.
 
 ### Pré-requisitos
-* JDK 25
-* Maven 3.9.x
+* JDK 25 instalado
+* Maven 3.9.x instalado
 
 ### Passo a Passo
-1. **Clonar o repositório:**
+1. **Abra um terminal/prompt de comando**
+2. **Clone o repositório GIT**
    ```bash
-   git clone https://github.com/usuario/projeto.git
+   git clone https://github.com/tiodanas/desafio-tecnico-sctec.git
+3. **Acesse o diretório raiz onde o projeto foi clonado**
+4. **Compile o projeto usando o maven**
+   ```bash
+   mvn clean package
+5. **Rode o jar gerado**
+   ```bash
+   java -jar target\sctec-empreendedorismo-backend-api-0.0.1-SNAPSHOT.jar
+6. **Acesse a página de documentação Swagger para ver se a aplicação está rodando, onde também pode-se testar os endpoints da API**
+   * [http://localhost:8080/api-docs.html](http://localhost:8080/api-docs.html)
+
+## 🎥 Link para o vídeo pitch
+
+**[http://localhost:8080/api-docs.html](http://localhost:8080/api-docs.html)**
